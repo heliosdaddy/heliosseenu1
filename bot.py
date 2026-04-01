@@ -4,9 +4,12 @@ import main_script
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
+import os
+
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+
 if not BOT_TOKEN:
-    raise ValueError("TELEGRAM_BOT_TOKEN environment variable is not set.")
+    raise ValueError("TELEGRAM_BOT_TOKEN is not set")
 
 running_task = None
 
@@ -45,9 +48,13 @@ async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("✅ Bot is running")
     else:
         await update.message.reply_text("❌ Bot is stopped")
+import os
 
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
-app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
+app = ApplicationBuilder().token(BOT_TOKEN).build()
+
+ApplicationBuilder().token(BOT_TOKEN)
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("stop", stop))
